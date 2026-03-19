@@ -46,16 +46,37 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
  * @throws  {Error} When the API returns a non-2xx HTTP status
  */
 export async function fetchProjects(): Promise<ProjectSummary[]> {
-  const response = await fetch(`${apiBaseUrl}/api/projects`, {
-    next: { revalidate: 60 }
-  });
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/projects`, {
+      next: { revalidate: 60 }
+    });
 
-  if (!response.ok) {
-    throw new Error('Unable to fetch projects');
+    if (!response.ok) {
+      throw new Error(`Unable to fetch projects (status: ${response.status})`);
+    }
+
+    const json = (await response.json()) as
+      | { items?: ProjectSummary[]; 'hydra:member'?: ProjectSummary[] }
+      | ProjectSummary[];
+
+    if (Array.isArray(json)) {
+      return json;
+    }
+
+    if (Array.isArray(json.items)) {
+      return json.items;
+    }
+
+    if (Array.isArray(json['hydra:member'])) {
+      return json['hydra:member'];
+    }
+
+    return [];
+  } catch (error) {
+    // Keep build/prerender resilient when the API is temporarily unavailable.
+    console.warn('Unable to fetch projects, returning an empty list.', error);
+    return [];
   }
-
-  const json = (await response.json()) as { items: ProjectSummary[] };
-  return json.items;
 }
 
 /**
