@@ -131,9 +131,3 @@ Un blueprint `render.yaml` est fourni pour:
 
 Adapter les URLs, secrets et plans avant mise en production.
 
-## Prochaines evolutions conseillees
-1. Ajouter Auth admin (`Symfony Security` + JWT).
-2. Ajouter filtre tags + recherche full-text.
-3. Synchroniser automatiquement les repos GitHub (API GitHub).
-4. Ajouter tests API (PHPUnit) et E2E frontend (Playwright).
-5. Externaliser l'upload de visuels (S3/Cloudinary).
