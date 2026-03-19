@@ -31,8 +31,8 @@ RUN mkdir -p /var/www/backend/var \
     && chmod -R 755 /var/www/backend/var || true
 # Expose a standard HTTP port and use the built-in PHP server so Render can detect HTTP
 EXPOSE 8080
-# Run the built-in PHP server binding to 0.0.0.0:8080
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
+# Run the built-in PHP server and route all requests through Symfony front controller
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public", "public/index.php"]
 
 ########################################
 # Frontend: deps and builder

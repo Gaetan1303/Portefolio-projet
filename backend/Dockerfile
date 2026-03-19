@@ -18,8 +18,8 @@ COPY --from=vendor /app/vendor /var/www/backend/vendor
 # Ensure permissions
 RUN chown -R www-data:www-data /var/www/backend && chmod -R 755 /var/www/backend/var || true
 
-EXPOSE 9000
+EXPOSE 8080
 
 USER www-data
 
-CMD ["php-fpm"]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public", "public/index.php"]
