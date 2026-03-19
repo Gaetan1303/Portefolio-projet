@@ -6,6 +6,7 @@ namespace App\Controller\Api;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HealthController extends AbstractController
@@ -24,6 +25,15 @@ final class HealthController extends AbstractController
     {
         return $this->json([
             'status' => 'ok',
+        ]);
+    }
+
+    #[Route('/favicon.ico', name: 'app_favicon', methods: ['GET', 'HEAD'])]
+    public function favicon(): Response
+    {
+        // API service: no favicon asset required, return empty success to silence browser retries.
+        return new Response('', Response::HTTP_NO_CONTENT, [
+            'Cache-Control' => 'public, max-age=86400',
         ]);
     }
 }
