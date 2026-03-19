@@ -1,5 +1,6 @@
 {
   "name": "billy/portfolio-backend",
+  "description": "Backend API Symfony du portfolio dynamique.",
   "type": "project",
   "license": "proprietary",
   "require": {
