@@ -22,6 +22,9 @@ RUN apk add --no-cache git unzip libpq-dev icu-dev oniguruma-dev zlib-dev curl b
 WORKDIR /var/www/backend
 COPY backend/ /var/www/backend/
 COPY --from=backend-vendor /app/vendor /var/www/backend/vendor
+RUN if [ ! -f /var/www/backend/.env ] && [ -f /var/www/backend/.env.example ]; then \
+            cp /var/www/backend/.env.example /var/www/backend/.env; \
+        fi
 # Ensure var directory exists and set permissions
 RUN mkdir -p /var/www/backend/var \
     && chown -R www-data:www-data /var/www/backend \
