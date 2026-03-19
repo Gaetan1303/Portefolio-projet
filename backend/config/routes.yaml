@@ -1,0 +1,3 @@
+api_projects:
+  resource: ../src/Controller/Api/
+  type: attribute

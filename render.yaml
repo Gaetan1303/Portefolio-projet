@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    plan: starter
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: "0"
+      - key: DATABASE_URL
+        sync: false
+
+  - type: web
+    name: portfolio-frontend
+    env: docker
+    plan: starter
+    dockerContext: frontend
+    dockerfilePath: frontend/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://portfolio-backend.onrender.com
+
+  - type: pserv
+    name: portfolio-postgres
+    env: docker
+    plan: starter
+    image:
+      url: postgres:16-alpine
