@@ -12,11 +12,21 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HealthController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods: ['GET', 'HEAD'])]
-    public function home(): JsonResponse
+    public function home(): Response
     {
-        return $this->json([
-            'status' => 'ok',
-            'service' => 'portfolio-backend',
+        $frontendUrl = $_ENV['APP_FRONTEND_URL'] ?? 'https://portefolio-projet.onrender.com';
+        $apiProjectsUrl = '/api/projects';
+        $healthUrl = '/health';
+
+        $html = sprintf(
+            '<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Portfolio API</title></head><body style="font-family:Arial,sans-serif;padding:24px;line-height:1.5"><h1>Portfolio Backend API</h1><p>Service actif.</p><ul><li><a href="%s">Frontend</a></li><li><a href="%s">API Projects</a></li><li><a href="%s">Health</a></li></ul></body></html>',
+            htmlspecialchars($frontendUrl, ENT_QUOTES),
+            $apiProjectsUrl,
+            $healthUrl
+        );
+
+        return new Response($html, Response::HTTP_OK, [
+            'Content-Type' => 'text/html; charset=UTF-8',
         ]);
     }
 

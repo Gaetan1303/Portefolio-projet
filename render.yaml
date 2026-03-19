@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-backend
+    name: portefolio-projet-api
     env: docker
     plan: starter
     dockerContext: backend
@@ -11,11 +11,13 @@ services:
         value: prod
       - key: APP_DEBUG
         value: "0"
+      - key: APP_FRONTEND_URL
+        value: https://portefolio-projet.onrender.com
       - key: DATABASE_URL
         sync: false
 
   - type: web
-    name: portfolio-frontend
+    name: portefolio-projet
     env: docker
     plan: starter
     dockerContext: frontend
@@ -23,7 +25,7 @@ services:
     autoDeploy: true
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://portfolio-backend.onrender.com
+        value: https://portefolio-projet-api.onrender.com
 
   - type: pserv
     name: portfolio-postgres
