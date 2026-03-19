@@ -1,5 +1,12 @@
 name: CI-CD
 
+permissions:
+  contents: read
+  packages: write
+
+env:
+  GHCR_NAMESPACE: gaetan1303
+
 on:
   push:
     branches: [main]
@@ -70,14 +77,14 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/portfolio-backend:latest
+          tags: ghcr.io/${{ env.GHCR_NAMESPACE }}/portfolio-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/portfolio-frontend:latest
+          tags: ghcr.io/${{ env.GHCR_NAMESPACE }}/portfolio-frontend:latest
 
   render-deploy:
     runs-on: ubuntu-latest
