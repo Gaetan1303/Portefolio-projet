@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 /** The two supported colour schemes. */
-type Theme = 'light' | 'dark';
+type Theme = 'gaetan_light' | 'gaetan_dark';
 
 /**
  * Button that toggles between light and dark colour schemes.
@@ -17,10 +17,10 @@ type Theme = 'light' | 'dark';
  *          current theme state
  */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('gaetan_dark');
 
   useEffect(() => {
-    const initial = (localStorage.getItem('theme') as Theme | null) ?? 'dark';
+    const initial = (localStorage.getItem('theme') as Theme | null) ?? 'gaetan_dark';
     document.documentElement.dataset.theme = initial;
     setTheme(initial);
   }, []);
@@ -30,15 +30,20 @@ export function ThemeToggle() {
    * attribute and persists the choice to `localStorage`.
    */
   const toggleTheme = () => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    const next: Theme = theme === 'gaetan_dark' ? 'gaetan_light' : 'gaetan_dark';
     document.documentElement.dataset.theme = next;
     localStorage.setItem('theme', next);
     setTheme(next);
   };
 
   return (
-    <button type="button" className="theme-toggle" onClick={toggleTheme}>
-      {theme === 'dark' ? 'Passer en clair' : 'Passer en sombre'}
+    <button
+      type="button"
+      className="btn btn-outline btn-sm"
+      onClick={toggleTheme}
+      aria-label={theme === 'gaetan_dark' ? 'Activer le mode clair' : 'Activer le mode sombre'}
+    >
+      {theme === 'gaetan_dark' ? 'Mode clair' : 'Mode sombre'}
     </button>
   );
 }

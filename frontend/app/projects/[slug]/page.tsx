@@ -24,33 +24,45 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const project = await fetchProjectBySlug(params.slug);
 
   return (
-    <main className="container detail-page">
-      <Link href="/" className="project-link">
-        Retour a la liste
-      </Link>
-      <article className="project-detail-card">
-        <p className="project-tag">Template source: {project.template ?? 'N/A'}</p>
-        <h1>{project.title}</h1>
-        <p>{project.description}</p>
-        <div className="tech-list">
-          {project.technologies.map((tech) => (
-            <span key={tech}>{tech}</span>
-          ))}
-        </div>
-        <div className="link-row">
+    <main className="home-bg section-shell py-16">
+      <div className="glass-card p-6 sm:p-8">
+        <Link href="/" className="btn btn-outline btn-sm">
+          Retour a la homepage
+        </Link>
+
+        <article className="mt-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-primary/90">Template source: {project.template ?? 'N/A'}</p>
+          <h1 className="mt-2 font-heading text-3xl font-bold sm:text-4xl">{project.title}</h1>
+          <p className="mt-4 max-w-3xl text-base-content/80">{project.description}</p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.technologies.map((tech) => (
+              <span key={tech} className="badge badge-outline">
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-6 flex gap-2">
           {project.githubUrl ? (
-            <a href={project.githubUrl} target="_blank" rel="noreferrer">
+            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="btn btn-primary btn-sm">
               GitHub
             </a>
           ) : null}
           {project.demoUrl ? (
-            <a href={project.demoUrl} target="_blank" rel="noreferrer">
+            <a href={project.demoUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
               Demo
             </a>
           ) : null}
-        </div>
-        {project.qrCode ? <img src={project.qrCode} alt={`QR code ${project.title}`} className="qr-code" /> : null}
-      </article>
+          </div>
+
+          {project.qrCode ? (
+            <div className="mt-6 inline-flex rounded-2xl border border-base-content/15 bg-white p-4">
+              <img src={project.qrCode} alt={`QR code ${project.title}`} width={180} height={180} />
+            </div>
+          ) : null}
+        </article>
+      </div>
     </main>
   );
 }

@@ -1,19 +1,25 @@
-FROM php:8.3-fpm-alpine
+FROM composer:2 AS vendor
+WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-RUN apk add --no-cache git unzip libpq-dev icu-dev oniguruma-dev zlib-dev curl \
+FROM php:8.3-fpm-alpine AS php-fpm
+RUN apk add --no-cache git unzip libpq-dev icu-dev oniguruma-dev zlib-dev curl bash \
     && docker-php-ext-install pdo pdo_pgsql intl opcache
-
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/backend
 
+# Copy application code
 COPY . /var/www/backend
 
-RUN if [ -f composer.json ]; then \
-    composer config --no-plugins allow-plugins.symfony/runtime true && \
-    composer install --no-interaction --prefer-dist; \
-fi
+# Copy vendor from the builder stage
+COPY --from=vendor /app/vendor /var/www/backend/vendor
+
+# Ensure permissions
+RUN chown -R www-data:www-data /var/www/backend && chmod -R 755 /var/www/backend/var || true
 
 EXPOSE 9000
+
+USER www-data
 
 CMD ["php-fpm"]

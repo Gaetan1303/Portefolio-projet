@@ -1,31 +1,28 @@
-import { ProjectGrid } from '@/components/project-grid';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { fetchProjects } from '@/lib/api';
+import type { Metadata } from 'next';
+import { HeroSection } from '@/components/home/hero-section';
+import { MainChoices } from '@/components/home/main-choices';
+import { AboutSection } from '@/components/home/about-section';
+import { StackSection } from '@/components/home/stack-section';
+import { DockerDemoSection } from '@/components/home/docker-demo-section';
 
-/**
- * Home page (Server Component).
- *
- * Fetches all projects from the Symfony API at request time (ISR, 60 s),
- * then renders the hero header and the animated project grid.
- *
- * @returns The root `<main>` element containing the hero and project list
- */
-export default async function HomePage() {
-  const projects = await fetchProjects();
+export const metadata: Metadata = {
+  title: 'Homepage',
+  description:
+    'Gaetan, developpeur full-stack specialise en applications interactives temps reel. Decouvrez ses projets educatifs, personnels, et son profil complet.',
+  keywords: ['Developpeur full-stack', 'Next.js', 'Symfony', 'temps reel', 'portfolio'],
+  alternates: {
+    canonical: '/'
+  }
+};
 
+export default function HomePage() {
   return (
-    <main className="container">
-      <header className="hero">
-        <div>
-          <p className="eyebrow">Symfony + Next.js + Prototype Pattern</p>
-          <h1>Portfolio dynamique, chaque projet devient un mini-site clonable.</h1>
-          <p className="subtitle">
-            Les contenus viennent de l&apos;API Symfony, les pages sont rendues dynamiquement avec un style moderne et des transitions legeres.
-          </p>
-        </div>
-        <ThemeToggle />
-      </header>
-      <ProjectGrid projects={projects} />
+    <main className="home-bg">
+      <HeroSection />
+      <MainChoices />
+      <AboutSection />
+      <StackSection />
+      <DockerDemoSection />
     </main>
   );
 }
