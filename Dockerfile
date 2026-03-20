@@ -1,6 +1,6 @@
 #####
 # Root multi-stage Dockerfile
-# - Default build (no --target) produces the backend image.
+# - Default build (no --target) produces the frontend image.
 # - You can build the frontend image with: docker build --target frontend-runner -t my-frontend:latest .
 #####
 
@@ -59,6 +59,6 @@ EXPOSE 3000
 CMD ["node", "server.js"]
 
 ########################################
-# Default target (backend)
+# Default target (frontend exposed on Render URL)
 ########################################
-FROM backend-base AS final
+FROM frontend-runner AS final
