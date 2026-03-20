@@ -51,12 +51,13 @@ RUN npm run build || true
 FROM node:20-alpine AS frontend-runner
 WORKDIR /app
 ENV NODE_ENV=production
+ENV PORT=3000
 COPY --from=frontend-builder /app/.next/standalone ./
 COPY --from=frontend-builder /app/.next/static ./.next/static
 COPY --from=frontend-builder /app/public ./public
 COPY --from=frontend-builder /app/node_modules ./node_modules
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "--enable-source-maps", "server.js"]
 
 ########################################
 # Default target (frontend exposed on Render URL)
