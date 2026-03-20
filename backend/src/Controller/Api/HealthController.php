@@ -15,7 +15,12 @@ final class HealthController extends AbstractController
     #[Route('/', name: 'app_home', methods: ['GET', 'HEAD'])]
     public function home(): RedirectResponse
     {
-        $frontendUrl = $_ENV['APP_FRONTEND_URL'] ?? 'http://localhost:3000';
+        $frontendUrl = $_ENV['APP_FRONTEND_URL'] ?? 'https://portefolio-projet.onrender.com';
+
+        // Guard against accidental localhost value in remote environments.
+        if (str_contains($frontendUrl, 'localhost')) {
+            $frontendUrl = 'https://portefolio-projet.onrender.com';
+        }
 
         return new RedirectResponse($frontendUrl, Response::HTTP_FOUND);
     }
