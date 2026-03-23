@@ -42,11 +42,11 @@ export function ProfileQrCard({ profileUrl }: ProfileQrCardProps) {
             <path d="M8 8h3v3H8zM13 13h3v3h-3zM8 13h3v3H8zM13 8h3v3h-3z" />
           </svg>
         </div>
-        <h3 className="font-heading text-xl font-semibold">Profil complet + QR Code</h3>
+        <h3 className="font-heading text-xl font-semibold">Profil complet + QR code</h3>
       </div>
 
       <p className="mb-4 text-sm text-base-content/75">
-        CV, LinkedIn, GitHub et documentation technique centralises dans une page unique.
+        CV, LinkedIn, GitHub et documentation technique centralisés dans une page unique.
       </p>
 
       <div className="mb-5 inline-flex rounded-2xl border border-base-content/15 bg-white p-4">
@@ -65,8 +65,8 @@ export function ProfileQrCard({ profileUrl }: ProfileQrCardProps) {
         <Link href="/profil" className="btn btn-primary btn-sm" aria-label="Voir le profil complet de Gaetan">
           Voir mon profil complet
         </Link>
-        <button type="button" onClick={handleDownload} className="btn btn-outline btn-sm" aria-label="Telecharger le QR code du profil">
-          Telecharger QR
+        <button type="button" onClick={handleDownload} className="btn btn-outline btn-sm" aria-label="Télécharger le QR code du profil">
+          Télécharger le QR code
         </button>
       </div>
     </article>

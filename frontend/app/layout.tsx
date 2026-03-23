@@ -20,13 +20,13 @@ const body = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://portefolio-projet.onrender.com'),
   title: {
-    default: 'Gaetan - Developpeur Full-Stack',
-    template: '%s | Gaetan'
+    default: 'Gaëtan - Développeur Full-Stack',
+    template: '%s | Gaëtan'
   },
-  description: 'Portfolio full-stack moderne de Gaetan, specialise en applications interactives temps reel avec Next.js et Symfony.',
+  description: 'Portfolio full-stack moderne de Gaëtan, spécialisé dans les applications interactives en temps réel avec Next.js et Symfony.',
   openGraph: {
-    title: 'Gaetan - Developpeur Full-Stack',
-    description: 'Applications interactives temps reel, architecture front/back moderne, et projets collaboratifs.',
+    title: 'Gaëtan - Développeur Full-Stack',
+    description: 'Applications interactives en temps réel, architecture front/back moderne et projets collaboratifs.',
     type: 'website',
     locale: 'fr_FR'
   },

@@ -48,17 +48,17 @@ export function MainChoices() {
         <div>
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary/90">Section principale</p>
           <h2 id="main-choices-title" className="font-heading text-3xl font-semibold sm:text-4xl">
-            Trois parcours pour decouvrir mon univers
+            Trois parcours pour découvrir mon univers
           </h2>
         </div>
       </div>
 
       <div className="grid gap-5 lg:grid-cols-3">
         <CardLink
-          title="Projets educatifs"
-          description="Projets realises durant la formation Bac+2, avec une progression technique constante."
+          title="Projets éducatifs"
+          description="Projets réalisés durant la formation Bac+2, avec une progression technique constante."
           href="/educatif"
-          points={['Architecture MVC', 'Conception et consommation API REST', 'Apprentissage technique structure et industrialisation']}
+          points={['Architecture MVC', 'Conception et consommation d’API REST', 'Apprentissage technique, structuration et industrialisation']}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="M3 8.5 12 4l9 4.5L12 13 3 8.5Z" />
@@ -69,9 +69,9 @@ export function MainChoices() {
 
         <CardLink
           title="Projets personnels"
-          description="Projets complexes et collaboratifs avec des contraintes d'architecture distribuee."
+          description="Projets complexes et collaboratifs avec des contraintes d'architecture distribuée."
           href="/perso"
-          points={['Cafeterie: plateforme collaborative', 'GameMaster L5R: temps reel multi-utilisateur', 'Focus: temps reel et architecture distribuee']}
+          points={['Cafétéria : plateforme collaborative', 'GameMaster L5R : temps réel multi-utilisateur', 'Focus : temps réel et architecture distribuée']}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               <path d="m4 19 8-14 3 6h5l-8 8-3-6H4Z" />

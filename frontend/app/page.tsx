@@ -6,10 +6,10 @@ import { StackSection } from '@/components/home/stack-section';
 import { DockerDemoSection } from '@/components/home/docker-demo-section';
 
 export const metadata: Metadata = {
-  title: 'Homepage',
+  title: 'Accueil',
   description:
-    'Gaetan, developpeur full-stack specialise en applications interactives temps reel. Decouvrez ses projets educatifs, personnels, et son profil complet.',
-  keywords: ['Developpeur full-stack', 'Next.js', 'Symfony', 'temps reel', 'portfolio'],
+    'Gaëtan, développeur full-stack spécialisé dans les applications interactives en temps réel. Découvrez ses projets éducatifs, personnels et son profil complet.',
+  keywords: ['Développeur full-stack', 'Next.js', 'Symfony', 'temps réel', 'portfolio'],
   alternates: {
     canonical: '/'
   }

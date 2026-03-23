@@ -27,11 +27,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <main className="home-bg section-shell py-16">
       <div className="glass-card p-6 sm:p-8">
         <Link href="/" className="btn btn-outline btn-sm">
-          Retour a la homepage
+          Retour à l'accueil
         </Link>
 
         <article className="mt-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-primary/90">Template source: {project.template ?? 'N/A'}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-primary/90">Template d'origine : {project.template ?? 'N/A'}</p>
           <h1 className="mt-2 font-heading text-3xl font-bold sm:text-4xl">{project.title}</h1>
           <p className="mt-4 max-w-3xl text-base-content/80">{project.description}</p>
 
@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ) : null}
           {project.demoUrl ? (
             <a href={project.demoUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
-              Demo
+              Démo
             </a>
           ) : null}
           </div>

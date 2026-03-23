@@ -40,30 +40,30 @@ type LogEntry = {
 const projects: DockerProject[] = [
   {
     key: 'cafeterie',
-    name: 'Cafeterie',
-    description: 'Plateforme collaborative full-stack orientee experience temps reel et efficacite produit.',
-    stack: ['Vue.js', 'Node.js', 'MongoDB', 'Docker'],
-    githubRepo: 'https://github.com/Gaetan1303/cafeterie',
-    docsUrl: 'https://github.com/Gaetan1303/cafeterie#readme',
+    name: 'Cafétéria',
+    description: 'Plateforme collaborative de gestion des consommations, du stock et des événements.',
+    stack: ['Vue.js 3', 'Express', 'MongoDB', 'Docker'],
+    githubRepo: 'https://github.com/Gaetan1303/Cafeterie',
+    docsUrl: 'https://github.com/Gaetan1303/Cafeterie-Back#readme',
     demoUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL ?? null,
     hasDockerfile: true,
     hasCompose: true,
     architecture: ['frontend', 'backend', 'base de donnees'],
-    ports: ['3000: frontend', '5000: api', '27017: mongodb'],
+    ports: ['4173: frontend', '5000: api', '27017: mongodb'],
     restartUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_RESTART_URL ?? null
   },
   {
     key: 'gamemaster-l5r',
     name: 'GameMaster L5R',
-    description: 'Application multi-utilisateur avec synchronisation d etat et interactions en direct.',
-    stack: ['Next.js', 'Symfony', 'PostgreSQL', 'Docker'],
-    githubRepo: 'https://github.com/Gaetan1303/gamemaster-l5r',
-    docsUrl: 'https://github.com/Gaetan1303/gamemaster-l5r#readme',
+    description: 'Plateforme de jeu de rôle multi-interface avec synchronisation temps réel entre maître de jeu et joueurs.',
+    stack: ['TypeScript', 'Node.js', 'Express', 'MongoDB'],
+    githubRepo: 'https://github.com/Gaetan1303/GM_L5R',
+    docsUrl: 'https://github.com/Gaetan1303/JDR-test#readme',
     demoUrl: process.env.NEXT_PUBLIC_DEMO_GAMEMASTER_URL ?? null,
     hasDockerfile: true,
     hasCompose: true,
-    architecture: ['frontend', 'backend', 'base de donnees'],
-    ports: ['3000: frontend', '8000: api', '5432: postgres'],
+    architecture: ['interface GM', 'interface joueur', 'backend', 'base de données'],
+    ports: ['3001: GM', '3002: joueur', '5001: api', '27017: mongodb'],
     restartUrl: process.env.NEXT_PUBLIC_DEMO_GAMEMASTER_RESTART_URL ?? null
   }
 ];
@@ -90,7 +90,7 @@ function ArchitecturePreview({ project }: { project: DockerProject }) {
 
   return (
     <details className="mt-4 rounded-xl border border-base-content/20 bg-base-100/50 p-4">
-      <summary className="cursor-pointer text-sm font-semibold text-primary">Voir architecture</summary>
+      <summary className="cursor-pointer text-sm font-semibold text-primary">Voir l'architecture</summary>
       <pre className="mt-3 overflow-x-auto rounded-lg bg-base-200/60 p-3 font-mono text-xs sm:text-sm">
 {`[ Next.js / Vue ]
        |
@@ -134,24 +134,24 @@ function ProjectDockerCard({ project, health, logs }: { project: DockerProject; 
 
       <div className="grid gap-4 text-sm md:grid-cols-2">
         <div className="rounded-xl border border-base-content/15 bg-base-100/40 p-3">
-          <p className="mb-2 font-semibold">Docker details</p>
+          <p className="mb-2 font-semibold">Détails Docker</p>
           <p>- Dockerfile: {project.hasDockerfile ? 'oui' : 'non'}</p>
           <p>- docker-compose.yml: {project.hasCompose ? 'oui' : 'non'}</p>
           <p>- Architecture: {project.architecture.join(' / ')}</p>
-          <p className="mt-2 text-xs text-base-content/75">Pipeline: build automatique GitHub + deploiement continu.</p>
+          <p className="mt-2 text-xs text-base-content/75">Pipeline : build automatique GitHub + déploiement continu.</p>
         </div>
 
         <div className="rounded-xl border border-base-content/15 bg-base-100/40 p-3">
           <p className="mb-2 font-semibold">Monitoring simple</p>
           <p>- Statut serveur: {liveState}</p>
           <p>- Latence: {health?.latencyMs ? `${health.latencyMs} ms` : 'n/a'}</p>
-          <p>- Dernier check: {health ? formatTime(health.checkedAt) : 'en attente'}</p>
-          <p>- URL demo: {project.demoUrl ?? 'a configurer'}</p>
+          <p>- Dernière vérification: {health ? formatTime(health.checkedAt) : 'en attente'}</p>
+          <p>- URL de démo: {project.demoUrl ?? 'à configurer'}</p>
         </div>
       </div>
 
       <div className="mt-4 rounded-xl border border-base-content/15 bg-base-100/40 p-3 text-sm">
-        <p className="mb-2 font-semibold">Ports exposes</p>
+        <p className="mb-2 font-semibold">Ports exposés</p>
         {project.ports.map((port) => (
           <p key={port}>- {port}</p>
         ))}
@@ -166,20 +166,20 @@ function ProjectDockerCard({ project, health, logs }: { project: DockerProject; 
         </a>
         {project.demoUrl ? (
           <a href={project.demoUrl} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm">
-            Voir la demo live
+            Voir la démo live
           </a>
         ) : (
           <button type="button" className="btn btn-secondary btn-sm" disabled>
-            Demo live a configurer
+            Démo live à configurer
           </button>
         )}
         {project.restartUrl ? (
           <a href={project.restartUrl} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm">
-            Restart container
+            Redémarrer le conteneur
           </a>
         ) : (
           <button type="button" className="btn btn-ghost btn-sm" disabled>
-            Restart container
+            Redémarrer le conteneur
           </button>
         )}
       </div>
@@ -256,12 +256,12 @@ export function DockerDemoSection() {
   return (
     <section className="section-shell" aria-labelledby="docker-demo-title">
       <div className="mb-6">
-        <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary/90">Demonstration technique</p>
+        <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary/90">Démonstration technique</p>
         <h2 id="docker-demo-title" className="font-heading text-3xl font-semibold sm:text-4xl">
-          Deploiement & Demo via Docker
+          Déploiement & démos via Docker
         </h2>
         <p className="mt-3 max-w-3xl text-base-content/80">
-          Chaque projet est containerise avec Docker et deploye en ligne. L utilisateur peut ouvrir une demo reelle en un clic, sans installation locale.
+          Chaque projet est conteneurisé avec Docker et peut être déployé pour une démonstration rapide. L’utilisateur peut ouvrir une démo réelle en un clic, sans installation locale.
         </p>
       </div>
 

@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * @see ProjectRepository
  * @see QrCodeService
  */
-#[Route('/api/projects')]
+#[Route('/api/portfolio/projects')]
 final class ProjectController extends AbstractController
 {
     /**
@@ -46,6 +46,7 @@ final class ProjectController extends AbstractController
                 'githubUrl' => $project->getGithubUrl(),
                 'demoUrl' => $project->getDemoUrl(),
                 'visuals' => $project->getVisuals(),
+                'template' => $project->getTemplate()?->getName(),
                 'technologies' => $project->getTechnologies()->map(static fn ($tech) => $tech->getName())->toArray(),
             ],
             $repository->findBy([], ['createdAt' => 'DESC'])

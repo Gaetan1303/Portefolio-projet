@@ -1,0 +1,45 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: demo-cafeterie-mongodb
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - demo_cafeterie_mongodb:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', 'db.adminCommand({ ping: 1 })']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    image: ${CAFETERIE_API_IMAGE:-ghcr.io/gaetan1303/cafeterie-back:latest}
+    container_name: demo-cafeterie-api
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGODB_URI: mongodb://mongodb:27017/cafeterie
+      JWT_SECRET: ${CAFETERIE_JWT_SECRET:-change-this-secret-before-public-demo}
+      FRONTEND_URL: ${CAFETERIE_FRONTEND_URL:-http://localhost:4173}
+    ports:
+      - '5000:5000'
+
+  frontend:
+    image: ${CAFETERIE_FRONTEND_IMAGE:-ghcr.io/gaetan1303/cafeterie:latest}
+    container_name: demo-cafeterie-frontend
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      PORT: 80
+      API_BASE_URL: ${CAFETERIE_API_BASE_URL:-http://localhost:5000}
+    ports:
+      - '4173:80'
+
+volumes:
+  demo_cafeterie_mongodb:

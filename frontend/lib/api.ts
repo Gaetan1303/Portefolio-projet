@@ -18,6 +18,7 @@ export type ProjectSummary = {
   githubUrl: string | null;
   demoUrl: string | null;
   visuals: string[];
+  template: string | null;
   technologies: string[];
 };
 
@@ -34,7 +35,13 @@ export type ProjectDetails = ProjectSummary & {
   qrCode: string | null;
 };
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
+const configuredPublicApiUrl = process.env.NEXT_PUBLIC_API_URL;
+const serverApiUrl = process.env.API_INTERNAL_URL ?? configuredPublicApiUrl?.replace('localhost', 'backend');
+
+const apiBaseUrl =
+  typeof window === 'undefined'
+    ? serverApiUrl ?? 'http://backend:8000'
+    : configuredPublicApiUrl ?? 'http://localhost:8000';
 
 /**
  * Fetches the full list of projects from the Symfony API, ordered newest first.
@@ -47,7 +54,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
  */
 export async function fetchProjects(): Promise<ProjectSummary[]> {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/projects`, {
+    const response = await fetch(`${apiBaseUrl}/api/portfolio/projects`, {
       next: { revalidate: 60 }
     });
 
@@ -89,7 +96,7 @@ export async function fetchProjects(): Promise<ProjectSummary[]> {
  * @throws     {Error} When the API returns a non-2xx HTTP status (including 404)
  */
 export async function fetchProjectBySlug(slug: string): Promise<ProjectDetails> {
-  const response = await fetch(`${apiBaseUrl}/api/projects/${slug}`, {
+  const response = await fetch(`${apiBaseUrl}/api/portfolio/projects/${slug}`, {
     next: { revalidate: 60 }
   });
 

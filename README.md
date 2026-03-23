@@ -1,18 +1,18 @@
-# Portfolio Dynamique (Symfony + Next.js + PostgreSQL)
+# Portfolio dynamique (Symfony + Next.js + PostgreSQL)
 
 ## Vision
-Ce repository pose une base de portfolio dynamique avec:
+Ce repository pose une base de portfolio dynamique avec :
 
 - Un backend `Symfony` exposant une API JSON.
 - Une base `PostgreSQL` pour les projets, templates et technologies.
 - Un frontend `Next.js` moderne, SEO-friendly, consommant l'API Symfony.
-- Une infra conteneurisee (`Docker`, `Docker Compose`) avec option `Kubernetes`.
-- Un pipeline CI/CD GitHub Actions et un blueprint de deploiement Render.
+- Une infrastructure conteneurisée (`Docker`, `Docker Compose`) avec option `Kubernetes`.
+- Un pipeline CI/CD GitHub Actions et un blueprint de déploiement Render.
 
-Le coeur metier suit l'idee du **Prototype Pattern**:
+Le cœur métier suit l'idée du **Prototype Pattern** :
 
 - `Template` = prototype de mini-site.
-- `Project` = instance concrete creee a partir d'un template.
+- `Project` = instance concrète créée à partir d'un template.
 
 ## Arborescence
 ```text
@@ -45,27 +45,27 @@ Le coeur metier suit l'idee du **Prototype Pattern**:
 - API Platform (resources sur entites)
 - Endroid QR Code
 
-### Entites principales
+### Entités principales
 - `Template`: prototype de contenu/layout.
-- `Project`: instance de projet reliee a un `Template`.
+- `Project`: instance de projet reliée à un `Template`.
 - `Technology`: techno associee aux projets (ManyToMany).
 
 ### Endpoints API principaux
 - `GET /api/projects`
 - `GET /api/projects/{slug}`
 
-`GET /api/projects/{slug}` renvoie aussi un QR code en Data URI (SVG) vers la demo ou le repo GitHub.
+`GET /api/projects/{slug}` renvoie aussi un QR code en Data URI (SVG) vers la démo ou le repo GitHub.
 
 ## Frontend Next.js
 ### Pourquoi Next.js
 - SEO solide (rendu server-side et metadata).
-- Integration facile avec API Symfony.
+- Intégration facile avec API Symfony.
 - UX moderne avec animations (`framer-motion`).
-- Deployment simple sur Render.
+- Déploiement simple sur Render.
 
 ### Fonctions implementees
 - Page d'accueil: liste des projets.
-- Page detail dynamique: `/projects/[slug]`.
+- Page détail dynamique: `/projects/[slug]`.
 - Theme clair/sombre.
 - UI moderne, responsive mobile/desktop.
 
