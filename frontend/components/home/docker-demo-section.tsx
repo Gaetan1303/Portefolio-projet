@@ -254,7 +254,7 @@ export function DockerDemoSection() {
   }, []);
 
   return (
-    <section className="section-shell" aria-labelledby="docker-demo-title">
+    <section id="docker-demo-title" className="section-shell" aria-labelledby="docker-demo-title">
       <div className="mb-6">
         <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary/90">Démonstration technique</p>
         <h2 id="docker-demo-title" className="font-heading text-3xl font-semibold sm:text-4xl">

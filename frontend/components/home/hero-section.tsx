@@ -57,11 +57,9 @@ export function HeroSection() {
 
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href="https://github.com/Gaetan1303?tab=repositories"
-            target="_blank"
-            rel="noreferrer"
+            href="/#docker-demo-title"
             className="btn btn-primary"
-            aria-label="Ouvrir les repositories GitHub de Gaetan"
+            aria-label="Aller à la section des démos"
           >
             Voir mes projets
           </a>
