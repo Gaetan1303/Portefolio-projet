@@ -16,8 +16,11 @@ export function HeroSection() {
   return (
     <section className="section-shell pt-16 sm:pt-20" aria-labelledby="hero-title">
       <div className="glass-card relative overflow-hidden p-6 sm:p-10">
-        <div className="absolute -right-10 top-8 h-44 w-44 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
-        <div className="absolute bottom-0 left-0 h-36 w-36 animate-driftSlow rounded-full bg-secondary/20 blur-2xl" aria-hidden="true" />
+        <div className="pointer-events-none absolute -right-10 top-8 h-44 w-44 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 h-36 w-36 animate-driftSlow rounded-full bg-secondary/20 blur-2xl"
+          aria-hidden="true"
+        />
 
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
           <p className="badge badge-outline border-primary/40 text-xs uppercase tracking-[0.22em]">Portfolio Full-Stack</p>

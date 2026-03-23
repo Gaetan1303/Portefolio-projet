@@ -42,8 +42,8 @@ const serverApiUrl =
 
 const apiBaseUrl =
   typeof window === 'undefined'
-    ? serverApiUrl ?? 'http://backend:8000'
-    : configuredPublicApiUrl ?? 'http://localhost:8000';
+    ? serverApiUrl ?? (process.env.NODE_ENV === 'development' ? 'http://backend:8000' : null)
+    : configuredPublicApiUrl ?? null;
 
 const fallbackProjects: ProjectSummary[] = [
   {
@@ -228,6 +228,10 @@ function fallbackProjectBySlug(slug: string): ProjectDetails | null {
  * @throws  {Error} When the API returns a non-2xx HTTP status
  */
 export async function fetchProjects(): Promise<ProjectSummary[]> {
+  if (!apiBaseUrl) {
+    return fallbackProjects;
+  }
+
   try {
     const response = await fetch(`${apiBaseUrl}/api/portfolio/projects`, {
       next: { revalidate: 60 }
@@ -271,6 +275,16 @@ export async function fetchProjects(): Promise<ProjectSummary[]> {
  * @throws     {Error} When the API returns a non-2xx HTTP status (including 404)
  */
 export async function fetchProjectBySlug(slug: string): Promise<ProjectDetails> {
+  if (!apiBaseUrl) {
+    const fallback = fallbackProjectBySlug(slug);
+
+    if (fallback) {
+      return fallback;
+    }
+
+    throw new Error('Unable to fetch project');
+  }
+
   try {
     const response = await fetch(`${apiBaseUrl}/api/portfolio/projects/${slug}`, {
       next: { revalidate: 60 }
