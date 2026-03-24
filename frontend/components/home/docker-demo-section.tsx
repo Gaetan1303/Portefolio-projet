@@ -1,7 +1,9 @@
 'use client';
 
+
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { CAFETERIE_TREE, CAFETERIE_BACK_TREE, AETHER_ENGINE_TREE } from './project-trees';
 
 type LiveState = 'live' | 'starting' | 'offline';
 
@@ -48,23 +50,37 @@ const projects: DockerProject[] = [
     demoUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL ?? null,
     hasDockerfile: true,
     hasCompose: true,
-    architecture: ['frontend', 'backend', 'base de donnees'],
+    architecture: [CAFETERIE_TREE],
     ports: ['4173: frontend', '5000: api', '27017: mongodb'],
     restartUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_RESTART_URL ?? null
   },
   {
-    key: 'gamemaster-l5r',
-    name: 'GameMaster L5R',
-    description: 'Plateforme de jeu de rôle multi-interface avec synchronisation temps réel entre maître de jeu et joueurs.',
-    stack: ['TypeScript', 'Node.js', 'Express', 'MongoDB'],
-    githubRepo: 'https://github.com/Gaetan1303/GM_L5R',
-    docsUrl: 'https://github.com/Gaetan1303/JDR-test#readme',
-    demoUrl: process.env.NEXT_PUBLIC_DEMO_GAMEMASTER_URL ?? null,
+    key: 'cafeterie-back',
+    name: 'Cafeterie-Back',
+    description: 'API REST Node.js/Express pour la gestion de la cafétéria.',
+    stack: ['Node.js', 'Express', 'MongoDB', 'Docker'],
+    githubRepo: 'https://github.com/Gaetan1303/Cafeterie-Back',
+    docsUrl: 'https://github.com/Gaetan1303/Cafeterie-Back#readme',
+    demoUrl: null,
     hasDockerfile: true,
     hasCompose: true,
-    architecture: ['interface GM', 'interface joueur', 'backend', 'base de données'],
-    ports: ['3001: GM', '3002: joueur', '5001: api', '27017: mongodb'],
-    restartUrl: process.env.NEXT_PUBLIC_DEMO_GAMEMASTER_RESTART_URL ?? null
+    architecture: [CAFETERIE_BACK_TREE],
+    ports: ['5000: api', '27017: mongodb'],
+    restartUrl: null
+  },
+  {
+    key: 'aether-engine',
+    name: 'Aether-Engine',
+    description: 'Backend Go pour la synchronisation temps réel et la logique métier avancée.',
+    stack: ['Go', 'Docker'],
+    githubRepo: 'https://github.com/Gaetan1303/Aether-Engine',
+    docsUrl: 'https://github.com/Gaetan1303/Aether-Engine#readme',
+    demoUrl: null,
+    hasDockerfile: true,
+    hasCompose: true,
+    architecture: [AETHER_ENGINE_TREE],
+    ports: ['8080: api'],
+    restartUrl: null
   }
 ];
 
@@ -86,17 +102,11 @@ function formatTime(value: string) {
 }
 
 function ArchitecturePreview({ project }: { project: DockerProject }) {
-  const dbName = useMemo(() => (project.stack.includes('MongoDB') ? 'MongoDB' : 'PostgreSQL'), [project.stack]);
-
   return (
     <details className="mt-4 rounded-xl border border-base-content/20 bg-base-100/50 p-4">
       <summary className="cursor-pointer text-sm font-semibold text-primary">Voir l'architecture</summary>
       <pre className="mt-3 overflow-x-auto rounded-lg bg-base-200/60 p-3 font-mono text-xs sm:text-sm">
-{`[ Next.js / Vue ]
-       |
-[ API Node.js / Symfony ]
-       |
-[ ${dbName} ]`}
+{project.architecture[0]}
       </pre>
     </details>
   );
