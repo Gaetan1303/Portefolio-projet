@@ -33,7 +33,12 @@ services:
     working_dir: /app
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_DEMO_MMO_RPG_URL: ${NEXT_PUBLIC_DEMO_MMO_RPG_URL:-http://localhost:3001}
+      DEMO_MMO_RPG_URL: ${DEMO_MMO_RPG_URL:-http://host.docker.internal:3001}
+      NEXT_PUBLIC_DEMO_MMO_RPG_RESTART_URL: ${NEXT_PUBLIC_DEMO_MMO_RPG_RESTART_URL:-}
       WATCHPACK_POLLING: 'true'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     volumes:
       - ./frontend:/app
       - /app/node_modules

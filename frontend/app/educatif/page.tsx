@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { fetchProjects } from '@/lib/api';
+import { fetchProjectsFeed } from '@/lib/api';
+import { OfflineDemoSlide } from '@/components/home/offline-demo-slide';
 
 export const metadata: Metadata = {
   title: 'Projets éducatifs',
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function EducatifPage() {
-  const projects = await fetchProjects();
-  const educationalProjects = projects.filter((project) => project.template === 'Projet educatif');
+  const feed = await fetchProjectsFeed();
+  const educationalProjects = feed.projects.filter((project) => project.template === 'Projet educatif');
 
   return (
     <main className="home-bg section-shell py-16">
@@ -20,6 +21,8 @@ export default async function EducatifPage() {
           Cette section regroupe les projets développés durant mon cursus Bac+2. Chaque itération m'a permis de consolider les fondamentaux
           d'architecture, de mieux structurer mes API REST et d'industrialiser mes pratiques.
         </p>
+
+        {feed.source === 'fallback' ? <div className="mt-6"><OfflineDemoSlide title="Presentation statique des projets educatifs" /></div> : null}
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {educationalProjects.map((project) => (

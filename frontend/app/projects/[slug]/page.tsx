@@ -61,6 +61,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <img src={project.qrCode} alt={`QR code ${project.title}`} width={180} height={180} />
             </div>
           ) : null}
+
+          {!project.qrCode ? (
+            <section className="mt-6 rounded-2xl border border-warning/35 bg-warning/10 p-4" aria-label="Presentation statique du projet">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-warning-content">Mode demo</p>
+              <p className="mt-2 text-sm text-base-content/80">
+                Backend indisponible: fallback statique.
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {project.visuals.length > 0
+                  ? project.visuals.slice(0, 2).map((visual) => (
+                      <figure key={visual} className="overflow-hidden rounded-xl border border-base-content/15 bg-base-100/70 p-2 flex flex-col items-center justify-center h-52">
+                        <span className="text-xs font-mono text-base-content/70 mb-2">{visual.split('/').pop()}</span>
+                        <img src={visual} alt={`Visuel de demonstration ${project.title}`} className="h-32 w-auto rounded-lg object-contain object-center" loading="lazy" />
+                      </figure>
+                    ))
+                  : <div className="flex items-center justify-center h-44 w-full"><span className="loading loading-spinner loading-lg text-warning"></span></div>}
+              </div>
+            </section>
+          ) : null}
         </article>
       </div>
     </main>

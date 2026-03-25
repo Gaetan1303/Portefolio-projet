@@ -3,25 +3,42 @@ import { NextResponse } from 'next/server';
 type LiveState = 'live' | 'starting' | 'offline';
 
 type ServiceTarget = {
-  key: 'cafeterie' | 'gamemaster-l5r';
+  key: 'cafeterie' | 'cafeterie-back' | 'aether-engine' | 'mmo-rpg';
   url: string | null;
 };
+
+function normalizeEnvUrl(value: string | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : null;
+}
 
 const targets: ServiceTarget[] = [
   {
     key: 'cafeterie',
-    url: process.env.DEMO_CAFETERIE_URL ?? null
+    url: normalizeEnvUrl(process.env.DEMO_CAFETERIE_URL) ?? normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL)
   },
   {
-    key: 'gamemaster-l5r',
-    url: process.env.DEMO_GAMEMASTER_URL ?? null
+    key: 'cafeterie-back',
+    url: normalizeEnvUrl(process.env.DEMO_CAFETERIE_BACK_URL) ?? normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_CAFETERIE_BACK_URL)
+  },
+  {
+    key: 'aether-engine',
+    url: normalizeEnvUrl(process.env.DEMO_AETHER_ENGINE_URL) ?? normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_AETHER_ENGINE_URL)
+  },
+  {
+    key: 'mmo-rpg',
+    url: normalizeEnvUrl(process.env.DEMO_MMO_RPG_URL) ?? normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_MMO_RPG_URL)
   }
 ];
 
 async function checkTarget(url: string | null): Promise<{ state: LiveState; latencyMs: number | null; reachableUrl: string | null }> {
   if (!url) {
     return {
-      state: 'starting',
+      state: 'offline',
       latencyMs: null,
       reachableUrl: null
     };
@@ -67,7 +84,7 @@ async function checkTarget(url: string | null): Promise<{ state: LiveState; late
     };
   } catch {
     return {
-      state: 'starting',
+      state: 'offline',
       latencyMs: null,
       reachableUrl: url
     };

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { fetchProjects } from '@/lib/api';
+import { fetchProjectsFeed } from '@/lib/api';
+import { OfflineDemoSlide } from '@/components/home/offline-demo-slide';
 
 export const metadata: Metadata = {
   title: 'Projets personnels',
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function PersoPage() {
-  const projects = await fetchProjects();
-  const personalProjects = projects.filter((project) => project.template === 'Projet personnel');
+  const feed = await fetchProjectsFeed();
+  const personalProjects = feed.projects.filter((project) => project.template === 'Projet personnel');
 
   return (
     <main className="home-bg section-shell py-16">
@@ -20,6 +21,8 @@ export default async function PersoPage() {
           Une zone dédiée à des projets ambitieux, souvent collaboratifs, où les enjeux de synchronisation, de scalabilité et d'architecture sont
           centraux.
         </p>
+
+        {feed.source === 'fallback' ? <div className="mt-6"><OfflineDemoSlide title="Presentation statique des projets personnels" /></div> : null}
 
         <div className="mt-8 grid gap-4 lg:grid-cols-2">
           {personalProjects.map((project) => (

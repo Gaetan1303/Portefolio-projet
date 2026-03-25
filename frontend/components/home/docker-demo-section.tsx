@@ -1,7 +1,7 @@
 'use client';
 
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CAFETERIE_TREE, CAFETERIE_BACK_TREE, AETHER_ENGINE_TREE } from './project-trees';
 
@@ -39,6 +39,22 @@ type LogEntry = {
   latencyMs: number | null;
 };
 
+function normalizeEnvUrl(value: string | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : null;
+}
+
+const MMO_RPG_TREE = `MMO-RPG/
+|-- app (Spring Boot API, WebSocket)
+|-- db (PostgreSQL)
+|-- mercure (SSE Hub)
+|-- caddy (reverse proxy)
+|-- compose.yaml`;
+
 const projects: DockerProject[] = [
   {
     key: 'cafeterie',
@@ -47,12 +63,12 @@ const projects: DockerProject[] = [
     stack: ['Vue.js 3', 'Express', 'MongoDB', 'Docker'],
     githubRepo: 'https://github.com/Gaetan1303/Cafeterie',
     docsUrl: 'https://github.com/Gaetan1303/Cafeterie-Back#readme',
-    demoUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL ?? null,
+    demoUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL),
     hasDockerfile: true,
     hasCompose: true,
     architecture: [CAFETERIE_TREE],
     ports: ['4173: frontend', '5000: api', '27017: mongodb'],
-    restartUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_RESTART_URL ?? null
+    restartUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_CAFETERIE_RESTART_URL)
   },
   {
     key: 'cafeterie-back',
@@ -61,7 +77,7 @@ const projects: DockerProject[] = [
     stack: ['Node.js', 'Express', 'MongoDB', 'Docker'],
     githubRepo: 'https://github.com/Gaetan1303/Cafeterie-Back',
     docsUrl: 'https://github.com/Gaetan1303/Cafeterie-Back#readme',
-    demoUrl: null,
+    demoUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_CAFETERIE_BACK_URL),
     hasDockerfile: true,
     hasCompose: true,
     architecture: [CAFETERIE_BACK_TREE],
@@ -75,12 +91,26 @@ const projects: DockerProject[] = [
     stack: ['Go', 'Docker'],
     githubRepo: 'https://github.com/Gaetan1303/Aether-Engine',
     docsUrl: 'https://github.com/Gaetan1303/Aether-Engine#readme',
-    demoUrl: null,
+    demoUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_AETHER_ENGINE_URL),
     hasDockerfile: true,
     hasCompose: true,
     architecture: [AETHER_ENGINE_TREE],
     ports: ['8080: api'],
     restartUrl: null
+  },
+  {
+    key: 'mmo-rpg',
+    name: 'MMO-RPG',
+    description: 'Template RPG multijoueur Spring Boot avec JWT, WebSocket/STOMP, PostgreSQL et orchestration Docker Compose.',
+    stack: ['Spring Boot', 'PostgreSQL', 'WebSocket/STOMP', 'Mercure', 'Docker Compose'],
+    githubRepo: 'https://github.com/Gaetan1303/MMO-RPG',
+    docsUrl: 'https://github.com/Gaetan1303/MMO-RPG#readme',
+    demoUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_MMO_RPG_URL) ?? 'http://localhost:3001',
+    hasDockerfile: true,
+    hasCompose: true,
+    architecture: [MMO_RPG_TREE],
+    ports: ['3001: caddy', '8888: app', '8081: mercure', '5433: postgresql'],
+    restartUrl: normalizeEnvUrl(process.env.NEXT_PUBLIC_DEMO_MMO_RPG_RESTART_URL)
   }
 ];
 
@@ -113,7 +143,7 @@ function ArchitecturePreview({ project }: { project: DockerProject }) {
 }
 
 function ProjectDockerCard({ project, health, logs }: { project: DockerProject; health: ProjectHealth | null; logs: LogEntry[] }) {
-  const liveState: LiveState = health?.state ?? 'starting';
+  const liveState: LiveState = health?.state ?? 'offline';
 
   return (
     <motion.article

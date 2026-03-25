@@ -9,12 +9,12 @@ type ProfileQrCardProps = {
 };
 
 export function ProfileQrCard({ profileUrl }: ProfileQrCardProps) {
-  const svgRef = useRef<SVGSVGElement | null>(null);
+  const qrContainerRef = useRef<HTMLDivElement | null>(null);
 
   const downloadableName = useMemo(() => 'gaetan-profil-qr.svg', []);
 
   const handleDownload = () => {
-    const svgElement = svgRef.current;
+    const svgElement = qrContainerRef.current?.querySelector('svg');
 
     if (!svgElement) {
       return;
@@ -49,9 +49,8 @@ export function ProfileQrCard({ profileUrl }: ProfileQrCardProps) {
         CV, LinkedIn, GitHub et documentation technique centralisés dans une page unique.
       </p>
 
-      <div className="mb-5 inline-flex rounded-2xl border border-base-content/15 bg-white p-4">
+      <div ref={qrContainerRef} className="mb-5 inline-flex rounded-2xl border border-base-content/15 bg-white p-4">
         <QRCodeSVG
-          ref={svgRef}
           value={profileUrl}
           size={170}
           bgColor="#ffffff"

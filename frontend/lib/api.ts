@@ -35,6 +35,13 @@ export type ProjectDetails = ProjectSummary & {
   qrCode: string | null;
 };
 
+export type ProjectFeedSource = 'api' | 'fallback';
+
+export type ProjectFeed = {
+  projects: ProjectSummary[];
+  source: ProjectFeedSource;
+};
+
 const configuredPublicApiUrl = process.env.NEXT_PUBLIC_API_URL;
 const serverApiUrl =
   process.env.API_INTERNAL_URL ??
@@ -53,7 +60,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Plateforme collaborative de gestion opérationnelle avec front Vue.js et API dédiée.',
     githubUrl: 'https://github.com/Gaetan1303/Cafeterie',
     demoUrl: process.env.NEXT_PUBLIC_DEMO_CAFETERIE_URL ?? null,
-    visuals: [],
+    visuals: ['/assets/cafeterie.png'],
     template: 'Projet personnel',
     technologies: ['Vue.js', 'JavaScript', 'Vite']
   },
@@ -64,7 +71,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'API Node.js/Express pour la gestion de la plateforme Cafeterie.',
     githubUrl: 'https://github.com/Gaetan1303/Cafeterie-Back',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/cafeterie-back.png'],
     template: 'Projet personnel',
     technologies: ['Node.js', 'Express', 'JavaScript']
   },
@@ -75,7 +82,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Serveur de logique metier oriente jeu avec architecture scalable.',
     githubUrl: 'https://github.com/Gaetan1303/Aether-Engine',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/aether-engine.png'],
     template: 'Projet personnel',
     technologies: ['Go', 'REST API']
   },
@@ -86,7 +93,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Client TypeScript/Angular connecte au moteur Aether et aux flux temps reel.',
     githubUrl: 'https://github.com/Gaetan1303/Aether-Game',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/aether-game.png'],
     template: 'Projet personnel',
     technologies: ['TypeScript', 'Angular']
   },
@@ -97,7 +104,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Application temps réel avec interfaces GM/Joueur et services Node.js.',
     githubUrl: 'https://github.com/Gaetan1303/JDR-test',
     demoUrl: process.env.NEXT_PUBLIC_DEMO_GAMEMASTER_URL ?? null,
-    visuals: [],
+    visuals: ['/assets/gamemaster-l5r.png'],
     template: 'Projet personnel',
     technologies: ['TypeScript', 'Node.js', 'Express', 'WebSocket']
   },
@@ -108,7 +115,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet TypeScript axe sur les interactions multi-utilisateur et le temps reel.',
     githubUrl: 'https://github.com/Gaetan1303/L5R-JDR',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/l5r-jdr.png'],
     template: 'Projet personnel',
     technologies: ['TypeScript', 'JavaScript', 'WebSocket']
   },
@@ -119,7 +126,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Application JavaScript/TypeScript autour de l univers L5R et de ses services backend.',
     githubUrl: 'https://github.com/Gaetan1303/Rokugan_le_monde_de_L5R',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/rokugan-le-monde-de-l5r.png'],
     template: 'Projet personnel',
     technologies: ['JavaScript', 'TypeScript', 'Node.js']
   },
@@ -130,7 +137,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet JavaScript collaboratif avec environnement Docker et architecture modulaire.',
     githubUrl: 'https://github.com/Gaetan1303/Inter-Ville-Project',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/inter-ville-project.png'],
     template: 'Projet personnel',
     technologies: ['JavaScript', 'Node.js', 'Docker']
   },
@@ -141,7 +148,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'API Python dediee a l univers L5R avec endpoints metier et conteneurisation Docker.',
     githubUrl: 'https://github.com/Gaetan1303/API-L5R',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/api-l5r.png'],
     template: 'Projet personnel',
     technologies: ['Python', 'Docker', 'REST API']
   },
@@ -152,7 +159,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet pedagogique React pour consommation d API et UI interactive.',
     githubUrl: 'https://github.com/Gaetan1303/TP-Pokemon-React',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/tp-pokemon-react.png'],
     template: 'Projet educatif',
     technologies: ['React', 'JavaScript', 'Vite']
   },
@@ -163,7 +170,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet Java avec Maven et outillage Docker pour structuration build/deploiement.',
     githubUrl: 'https://github.com/Gaetan1303/test-mvn',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/test-mvn.png'],
     template: 'Projet educatif',
     technologies: ['Java', 'Maven', 'Docker']
   },
@@ -174,7 +181,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet de groupe mediatheque web avec logique CRUD orientee PHP/SQL.',
     githubUrl: 'https://github.com/Gaetan1303/mediatheque_toulouse_grp1',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/mediatheque-toulouse-grp1.png'],
     template: 'Projet educatif',
     technologies: ['PHP', 'SQL']
   },
@@ -185,7 +192,7 @@ const fallbackProjects: ProjectSummary[] = [
     description: 'Projet collaboratif autour du festival Mars IA, integration front React/JS.',
     githubUrl: 'https://github.com/Fraxoo/mars-ia-atelier2-toulouse',
     demoUrl: null,
-    visuals: [],
+    visuals: ['/assets/mars-ia-atelier2-toulouse.png'],
     template: 'Projet educatif',
     technologies: ['React', 'JavaScript']
   }
@@ -228,8 +235,16 @@ function fallbackProjectBySlug(slug: string): ProjectDetails | null {
  * @throws  {Error} When the API returns a non-2xx HTTP status
  */
 export async function fetchProjects(): Promise<ProjectSummary[]> {
+  const feed = await fetchProjectsFeed();
+  return feed.projects;
+}
+
+export async function fetchProjectsFeed(): Promise<ProjectFeed> {
   if (!apiBaseUrl) {
-    return fallbackProjects;
+    return {
+      projects: fallbackProjects,
+      source: 'fallback'
+    };
   }
 
   try {
@@ -246,22 +261,37 @@ export async function fetchProjects(): Promise<ProjectSummary[]> {
       | ProjectSummary[];
 
     if (Array.isArray(json)) {
-      return mergeWithFallbackProjects(json);
+      return {
+        projects: mergeWithFallbackProjects(json),
+        source: 'api'
+      };
     }
 
     if (Array.isArray(json.items)) {
-      return mergeWithFallbackProjects(json.items);
+      return {
+        projects: mergeWithFallbackProjects(json.items),
+        source: 'api'
+      };
     }
 
     if (Array.isArray(json['hydra:member'])) {
-      return mergeWithFallbackProjects(json['hydra:member']);
+      return {
+        projects: mergeWithFallbackProjects(json['hydra:member']),
+        source: 'api'
+      };
     }
 
-    return fallbackProjects;
+    return {
+      projects: fallbackProjects,
+      source: 'fallback'
+    };
   } catch (error) {
     // Keep build/prerender resilient when the API is temporarily unavailable.
     console.warn('Unable to fetch projects, using fallback portfolio data.', error);
-    return fallbackProjects;
+    return {
+      projects: fallbackProjects,
+      source: 'fallback'
+    };
   }
 }
 
